@@ -103,7 +103,7 @@ $predictedMulti = $ba->predictMulti($X_predict_demo, $model['weights'], $model['
 </head>
 <body>
 
-<h1>📊 PHP Quantitative Library</h1>
+<h1>📊 Quantitative – PHP Statistical & ML Formula Library</h1>
 <p>Demo + documentation for statistics, regression, and machine learning helper methods.</p>
 
 <div class="section">
