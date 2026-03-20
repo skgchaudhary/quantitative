@@ -1,169 +1,198 @@
-# Quantitative
+# 📊 Quantitative – PHP Statistical & ML Formula Library
 
-Lightweight **statistical and machine learning formula library for PHP**.
+A lightweight PHP library providing **statistics, regression, and machine learning helper methods** using **pre-written mathematical formulas**.
 
-No engines. No abstractions. No dependencies.
-Just **pre-written formulas** you can use directly in your backend.
-
----
-
-## 🚀 Why Quantitative?
-
-Most ML libraries are:
-
-* Complex
-* Heavy
-* Require pipelines, training loops, or external tools
-
-**Quantitative is different.**
-
-> 🔥 It gives you ready-to-use formulas — like Excel, but in PHP.
+> 🔥 No heavy frameworks. No dependencies. Just formulas.
 
 ---
 
-## ✨ Features
+## 🚀 Features
 
-* 📊 Central Tendency
-
-  * Mean
-  * Standard Deviation
-
-* 📈 Regression
-
-  * Linear Regression (slope & intercept)
-  * Prediction
-
-* 🔢 Matrix Operations
-
-  * Determinant (2x2, 3x3)
-
-* 📦 Data Utilities
-
-  * Train/Test Split
+* 📈 Central Tendency (Mean, Median, Mode, Standard Deviation)
+* ⚙️ Data Preprocessing (Normalization, Standardization)
+* 🎲 Random Distributions (Normal, Uniform)
+* 🔀 Train/Test Split
+* 📉 Correlation & Regression
+* 🧮 Determinants (2x2, 3x3)
+* 🤖 Machine Learning Helpers (Prediction, MSE, R², Gradient Descent)
 
 ---
 
-## ⚡ Installation
+# 📈 Central Tendency
 
-Just copy the files into your project.
-
-Or via Composer (optional):
-
-```bash
-composer require suneet/quantitative
-```
-
----
-
-## 🧠 Usage
-
-### 1. Linear Regression
+### Input
 
 ```php
-$x = [1, 2, 3, 4];
-$y = [2, 4, 6, 8];
-
-list($m, $b) = Regression::linear($x, $y);
-
-echo Regression::predict(5, $m, $b); // Output: 10
+$data = [32, 111, 138, 28, 59, 77, 97];
 ```
 
----
-
-### 2. Mean & Standard Deviation
+### Usage
 
 ```php
-$data = [10, 20, 30, 40];
+$ct = new CentralTendency();
 
-echo Stats::mean($data);
-echo Stats::std($data);
+$ct->mean($data);
+$ct->median($data);
+$ct->mode($data);
+$ct->standardDeviation($data);
+$ct->normalize($data);
+$ct->standardize($data);
 ```
+
+### Output
+
+* Mean: **77.43**
+* Median: **77**
+* Mode: **32**
+* Std Dev: **37.84**
 
 ---
 
-### 3. Matrix Determinant
+# 🎲 Distribution
+
+### Usage
 
 ```php
-$matrix = [
-    [1, 2],
-    [3, 4]
-];
+$d = new Distribution();
 
-echo Matrix::determinant2x2($matrix);
+$d->randomNormal($mean, $sd, $count);
+$d->randomUniform($min, $max, $count);
+$d->trainTestSplit($data, 0.7);
 ```
+
+### Output Highlights
+
+* Random Normal Mean ≈ **4.97**
+* Random Uniform Mean ≈ **2.79**
+* Train/Test split works correctly (70/30)
 
 ---
 
-### 4. Train Test Split
+# 📉 Bivariate Analysis
+
+### Input
 
 ```php
-list($xTrain, $xTest, $yTrain, $yTest) =
-    Distribution::trainTestSplit($X, $y, 0.8);
+$x = [1,6,11,16,20,26];
+$y = [13,16,17,23,24,31];
+```
+
+### Usage
+
+```php
+$ba = new BivariateAnalysis();
+
+$ba->getCorrelation($x, $y);
+$ba->getLinearRegressionSlope($x, $y);
+$ba->getLinearRegressionIntercept($x, $y);
+$ba->predict(10, $slope, $intercept);
+$ba->mse($yTrue, $yPred);
+$ba->r2($yTrue, $yPred);
+```
+
+### Output
+
+* Correlation: **0.978** (strong positive)
+* Regression:
+
+  ```
+  Y = 11.32 + 0.70X
+  ```
+* Prediction (X=10): **18.33**
+* MSE: **1.57**
+* R²: **0.956**
+
+---
+
+# 🧮 Determinants
+
+### Usage
+
+```php
+$ba->getDeterminant2Into2(3, -1, 4, -2);
+$ba->getDeterminant3Into3(1,2,3,4,5,6,7,8,9);
+```
+
+### Output
+
+* Determinant 2x2: **-2**
+* Determinant 3x3: **0**
+
+---
+
+# 🤖 Machine Learning Demo (Formula-Based)
+
+> This demonstrates ML using **pure gradient descent formulas**.
+
+### Training
+
+```php
+$model = $ba->multiLinearRegression($X_train, $y_train, 0.01, 5000);
+```
+
+### Model Output
+
+* Weights: `[0.33, 2.66]`
+* Bias: `2.33`
+
+---
+
+### Prediction
+
+```php
+$predictions = $ba->predictMulti($X_predict, $model['weights'], $model['bias']);
+```
+
+### Output
+
+* Predictions: `[23, 26, 29]` (approx)
+
+---
+
+# ⚠️ Error Handling
+
+```php
+$x = [1,2,3];
+$y = [1,2];
+
+$ba->getCorrelation($x, $y);
+```
+
+Output:
+
+```
+Error: X and Y must be same length
 ```
 
 ---
 
-## 🧩 Philosophy
+# 🧠 Mathematical Validity
 
-Quantitative is built on one simple idea:
+All methods are based on **standard, verified formulas**:
 
-> ❌ No ML engine
-> ❌ No over-engineering
-> ✅ Just formulas
+### ✔️ Statistics
 
-It is designed for:
+* Mean, Median, Mode → textbook definitions
+* Standard Deviation → population formula
 
-* Backend developers
-* PHP APIs
-* Quick analytics
-* Lightweight ML use cases
+### ✔️ Regression
 
----
+* Slope:
 
-## 🧠 Analogy
+  ```
+  b = (nΣxy - ΣxΣy) / (nΣx² - (Σx)²)
+  ```
+* Intercept:
 
-> 🧩 Quantitative = Excel formulas for PHP
+  ```
+  a = (Σy - bΣx) / n
+  ```
 
----
+### ✔️ Machine Learning
 
-## 📌 Use Cases
+* Gradient Descent:
 
-* Cost prediction
-* Shipment analytics
-* Backend data processing
-* Simple ML without Python
-
----
-
-## ⚠️ Limitations
-
-* Not a full ML framework
-* No neural networks
-* No automatic training pipelines
-
----
-
-## 🚀 Roadmap
-
-* Correlation functions
-* More regression models
-* Classification (simple formulas)
-* Additional matrix operations
-
----
-
-## 🤝 Contributing
-
-Feel free to open issues or submit pull requests.
-
----
-
-## 📄 License
-
-MIT
-
----
-
-## 👨‍💻 Author
-
-Built by Suneet C.
+  ```
+  w = w - α * ∂Loss/∂w
+  b = b - α * ∂Loss*
+  ```
